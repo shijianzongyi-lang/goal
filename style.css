@@ -1,0 +1,11 @@
+.center {
+  text-align: center;
+}
+canvas {
+  border: 1px solid black;
+  
+}
+
+#goal {
+  text-align: right;
+}
