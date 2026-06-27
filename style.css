@@ -5,7 +5,9 @@ canvas {
   border: 1px solid black;
   
 }
-
+#explain {
+  display: none;
+}
 #goal {
   text-align: right;
 }
