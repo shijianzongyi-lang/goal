@@ -142,7 +142,7 @@ function canvasClick(e) {
   let cellNum = 4 * ycell + xcell;
   const xpix = xcell * cellSize;
   const ypix = ycell * cellSize;
-  result.textContent = `クリック座標: X=${xpix}, Y=${ypix}, Number: ${cellNum}`;
+  //result.textContent = `クリック座標: X=${xpix}, Y=${ypix}, Number: ${cellNum}`;
 
   
   judge(cellNum);
@@ -237,10 +237,10 @@ function judge(value) {
       processing(tmp, myTmpCellNum);
       console.log(`k = ${k}、tmp = ${myTmpCellNum}で${fieldInfo[myTmpCellNum]}`);
       countfunc();
+      if (myTmpCellNum == 3) {
+        goalProcess();
+      }
     };
-    if (value == 3) {
-      goalProcess(value);
-    }
   } else if (tmpgyo == gyo && tmpretu != retu) {
     //横移動の処理
     const idou = retu - tmpretu;
@@ -268,10 +268,11 @@ function judge(value) {
       processing(tmp, myTmpCellNum);
       console.log(`l = ${k}、tmp = ${myTmpCellNum}で${fieldInfo[myTmpCellNum]}`);
       countfunc();
+      if (myTmpCellNum == 3) {
+        goalProcess();
+      }
     };
-    if (value == 3) {
-      goalProcess(value);
-    }
+    
   } else if (tmpgyo != gyo && tmpretu != retu) {
     //斜めのマスをクリックしたとき
     userConsole.textContent = "斜めには動けないよぉ～😢";
@@ -289,7 +290,7 @@ function countfunc() {
   console.log(`${stepCount}歩で宝${bonusNum}個です`);
 }
 
-function goalProcess(value) {
+function goalProcess() {
   ctx.drawImage(imageg, 0, 0, fieldsLength, fieldsLength);
   fields.removeEventListener("click", canvasClick);
   userConsole.textContent = `RESULT : ${stepCount}歩、宝${bonusNum}個`;
