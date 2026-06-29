@@ -3,22 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>キャンバス</title>
+  <title>探検</title>
   <link rel="icon" href="a.png" type="image/x-icon">
   <link rel="stylesheet" href="style.css" type="text/css">
   <style>
     
   </style>
 </head>
+<nav class="open_menu">
+  <div class="menu1"><a class="menu11" href="index_explain.html">ー 操作方法 ー</a></div>
+  <div class="menu2"><a class="menu11" href="https://www.google.com">ー 準備中 ー</a></div>
+  <div class="menu2"><a class="menu11" href="https://www.google.com">ー 準備中 ー</a></div>
+</nav>
+<header>
+  <div class="header_background">
+      <div class="header_container">
+        <div class="header_navbar">
+          <div class="logo">
+            <a class="logo_item" href="index.html">
+              <img src="coin.png" class="headStar">
+              <text class="headText">たんたんけん</text>
+            </a>
+          </div>
+          <a class="header_line">
+            <span class="line-item line-item--top"></span>
+            <span class="line-item line-item--middle"></span>
+            <span class="line-item line-item--bottom"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+</header>
 <body class="yusei-magic-regular">
-  <h1>キャンバス</h1>
-  <button id="allReset">全リセット</button>
-  <button id="reset">盤面変えずにリセット</button>
+  <!--<h3 class="center">キャンバス</h3>-->
+  <div id="buttons" class="center">
+    <button id="allReset">全リセット</button>
+    <button id="reset">盤面固定でリスタート</button>
+  </div>
   <p id="explain" class="center">あかさたな</p>
-  <p id="alert" class="center">注意</p>
+  <p id="alert" class="center"></p>
   <div id="goal">↑GOAL↑</div>
   <canvas id="field" height="361" width="360"></canvas>
   <div>↑START↑</div>
+
+  <dialog id="dialog">
+    <form method="dialog">
+    </form>
+  </dialog>
 
   <script src="script.js"></script>
 </body>
