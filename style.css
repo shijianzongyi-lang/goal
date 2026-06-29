@@ -1,3 +1,127 @@
+@charset "utf-8";
+
+header {
+  width: 100%;
+  height: 70px;
+  margin: 0;
+}
+
+.header_background {
+  margin: 0;
+  background-color: #EFA73D;
+}
+
+.header_navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_container {
+  padding: 10px;
+  height: 40px;
+}
+
+.logo_item {
+  align-items: center;
+  text-decoration: none;
+}
+
+.headStar {
+  height: 40px;
+  width: auto;
+}
+.logo {
+  display:table;
+}
+.headText {
+  font-size: 30px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 5px;
+  display:table-cell;
+  vertical-align:middle;
+}
+
+.header_line {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.header_line .line-item--top{
+  width: 40px;
+  top: 8px;
+}
+
+.header_line .line-item--middle {
+  width: 40px;
+  top: 19px;
+}
+
+.header_line .line-item--bottom {
+  width: 40px;
+  top: 30px;
+}
+
+.header_line .line-item {
+  position: absolute;
+  background: #000000;
+  height: 2px;
+  right: 0;
+}
+
+header {
+  position: sticky;  /* または sticky / fixed など既存の指定に合わせる */
+  top: 0;
+  z-index: 200;        /* open_menu の z-index: 100 より大きい値にする */
+}
+
+.open_menu {
+  background-color: #e7b66d;
+  position: fixed;      /* 画面全体に重ねる */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;   /* display:none の代わりにこちらを使う */
+  transition: opacity 0.5s, visibility 0.5s;
+  z-index: 100;
+}
+
+.open_menu.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.active {
+  overflow: hidden;
+}
+
+.menu1 {
+  margin: 180px auto;
+  margin-bottom: 70px;
+  text-align: center;
+}
+.menu11 {
+  text-decoration: none;
+  font-size: 25px;
+}
+.menu2 {
+  margin: 20px auto;
+  margin-bottom: 70px;
+  text-align: center;
+}
+
+
+
+body {
+  font-family: "Kiwi Maru", serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+}
 .center {
   text-align: center;
 }
@@ -10,4 +134,41 @@ canvas {
 }
 #goal {
   text-align: right;
+}
+#alert {
+  height: 46px;
+  margin: 5px;
+}
+
+dialog {
+  width: 70%;
+  height: 70%;
+  padding: 5%;
+	border: none;
+	border-radius: 0.5rem;
+}
+.closepop {
+  padding: 0.5rem 1rem;
+	border-radius: 0.4rem;
+	cursor: pointer;
+  text-align: center;
+}
+.closeppp {
+  text-align:center;
+}
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.diatitle {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+.diap {
+  margin: 5px;
+}
+.diascore {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
 }
