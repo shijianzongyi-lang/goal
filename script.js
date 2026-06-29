@@ -1,4 +1,17 @@
 'use strict';
+//何見てるんですか.粗探さないでください.
+
+const storage = localStorage;
+if (storage.getItem("best_score") == null) {
+  storage.setItem("best_score", JSON.stringify(""));
+};
+
+const menu = document.querySelector('.header_line');
+menu.addEventListener("click", menuchange);
+function menuchange() {
+  document.querySelector('body').classList.toggle('active');
+  document.querySelector('.open_menu').classList.toggle('active');
+}
 
 function getRandom(min, max) {
   return Math.floor(Math.random() * ((max + 1) - min) + min);
@@ -18,6 +31,8 @@ let stepCount = 0;//通ったマスの数
 let bonusNum = 0;//拾った宝の数
 const oneStep = 1;//ノーマルセル１マス通ったときのインクリメント
 const bonus = 3;//宝拾ったときのデクリメント
+let zuruResetCount = 0;
+let bestjudge = false;
 
 //フィールドをランダムに生成
 let fieldInfo = new Array(16).fill(0);
@@ -73,10 +88,15 @@ const imageg = new Image();
 imageg.src = 'goal.png';
 const images = new Image();
 images.src = 'start.png';
+const imager = new Image();
+imager.src = 'result.png';
+const imageb = new Image();
+imageb.src = 'best.png';
 
 let passedPath = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];//通った道
 let attributes = [[imagep, imagec, imageh, imagei, imageo], [0, 2, -2, -1, 1]];
-
+let moveNum = [0, 0];
+let tmpMoveNum = 0;
 
 function makeFieldImage(index) {//表示する画像のインデックス
   for (let i = 0; i < 16; i++) {
@@ -97,21 +117,49 @@ function makeFieldImages() {//盤面上の全ての画像をリセット
 };
 
 
-
+const maxTime = 20;
+let count = 0;
+let timerId;
+let date1, date2;
+function refleshTime() {
+  count += 1;
+  userConsole.textContent = `${count}秒経過`;
+  if (count >= maxTime) {
+    clearInterval(timerId);
+    fields.removeEventListener('click', canvasClick);
+    ctx.drawImage(images, 0, 0, fieldsLength, fieldsLength);
+    const textWidth = ctx.measureText('TIME UP!!').width;
+    ctx.font = "40px serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = '#474747';
+    ctx.fillText('TIME UP!!', cellSize * 2, cellSize * 2);
+    setTimeout(() => {
+      fieldInfo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      makeFieldInfo();
+      pertsReset();
+    }, 5000);
+  }
+}
 function getStart() {
   ctx.clearRect(0, 0, fieldsLength, fieldsLength);
-  //最初に画像を貼り付け
-  //for (let k = 0; k < attributes[0].length; k++) {
-    //attributes[0][k].addEventListener('load', () => {
-      //makeFieldImage(k);
-    //})
-  //};
   pertsReset();
   fields.removeEventListener('click', getStart);
-  imagem.addEventListener('load', () => {
+  resetImage.disabled = false;
+  allReset.disabled = false;
+  //imagem.addEventListener('load', () => {
+    //ctx.drawImage(imagem, 0, cellSize * 3, cellSize, cellSize);
+    //fields.addEventListener('click', canvasClick);
+  //});
+  if (imagem.complete) {
     ctx.drawImage(imagem, 0, cellSize * 3, cellSize, cellSize);
     fields.addEventListener('click', canvasClick);
-  });
+  } else {
+    imagem.addEventListener('load', () => {
+      ctx.drawImage(imagem, 0, cellSize * 3, cellSize, cellSize);
+      fields.addEventListener('click', canvasClick);
+    });
+  }
 }
 
 const result = document.getElementById("explain");
@@ -122,7 +170,7 @@ images.addEventListener('load', () => {
   const textWidth = ctx.measureText('タップして開始').width;
   ctx.font = "40px serif";
   ctx.textAlign = "center";
-  ctx.textBaseLine = "middle";
+  ctx.textBaseline = "middle";
   ctx.fillStyle = '#474747';
   ctx.fillText('タップして開始', cellSize * 2, cellSize * 2);
   fields.addEventListener('click', getStart);
@@ -144,9 +192,8 @@ function canvasClick(e) {
   const ypix = ycell * cellSize;
   //result.textContent = `クリック座標: X=${xpix}, Y=${ypix}, Number: ${cellNum}`;
 
-  
   judge(cellNum);
-  console.log(`tmpCellNum = ${tmpCellNum}`);
+  //console.log(`tmpCellNum = ${tmpCellNum}`);
 };
 
 function moveImage(cellNum) {
@@ -174,18 +221,31 @@ function pertsReset() {
   passedPath = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
   stepCount = 0;//通ったマスの数
   bonusNum = 0;//拾った宝の数
+  moveNum = [0, 0];
   makeFieldImages();
   ctx.drawImage(imagem, 0, cellSize * 3, cellSize, cellSize);
+  fields.removeEventListener('click', showDialog);
   fields.addEventListener('click', canvasClick);
   userConsole.textContent = "";
+  date1 = new Date();
+  count = 0;
+  clearInterval(timerId);
+  timerId = setInterval(refleshTime, 1000);
+  bestjudge = false;
 }
 //盤面以外をリセットする！！！！！！！
-resetImage.addEventListener('click', pertsReset);
+resetImage.disabled = true;
+resetImage.addEventListener('click', () => {
+  pertsReset();
+  zuruResetCount += 1;
+});
 //盤面全てをリセットする！！！！！！！！！
+allReset.disabled = true;
 allReset.addEventListener('click', () => {
   fieldInfo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   makeFieldInfo();
   pertsReset();
+  zuruResetCount = 0;
 })
 
 
@@ -214,11 +274,14 @@ function judge(value) {
     //縦移動の処理
     const idou = gyo - tmpgyo;
     for (let k = Math.sign(idou); Math.abs(k) <= Math.abs(idou); k += Math.sign(idou)) {
+      tmpMoveNum += 1;
+      console.log(`tmpMoveNum = ${tmpMoveNum}`);
       myTmpCellNum += Math.sign(k) * 4;
       const tmp = fieldInfo[myTmpCellNum];
       moveImage(myTmpCellNum);
       if (tmp == -2) {
         ctx.drawImage(imagef, 0, 0, fieldsLength, fieldsLength);
+        clearInterval(timerId);
         userConsole.textContent = "穴に落ちた💦再読み込みでリスタートしよう！";
         fields.removeEventListener("click", canvasClick);
         break;
@@ -241,15 +304,23 @@ function judge(value) {
         goalProcess();
       }
     };
+    if (tmpMoveNum == 2) {
+      moveNum[0] += 1;
+    } else if (tmpMoveNum == 3) {
+      moveNum[1] += 1;
+    };
+    tmpMoveNum = 0;
   } else if (tmpgyo == gyo && tmpretu != retu) {
     //横移動の処理
     const idou = retu - tmpretu;
     for (let k = Math.sign(idou); Math.abs(k) <= Math.abs(idou); k += Math.sign(idou)) {
+      tmpMoveNum += 1;
       myTmpCellNum += Math.sign(k);
       const tmp = fieldInfo[myTmpCellNum];
       moveImage(myTmpCellNum);
       if (tmp == -2) {
         ctx.drawImage(imagef, 0, 0, fieldsLength, fieldsLength);
+        clearInterval(timerId);
         userConsole.textContent = "穴に落ちた💦再読み込みでリスタートしよう！";
         fields.removeEventListener("click", canvasClick);
         break;
@@ -266,13 +337,18 @@ function judge(value) {
         break;
       }
       processing(tmp, myTmpCellNum);
-      console.log(`l = ${k}、tmp = ${myTmpCellNum}で${fieldInfo[myTmpCellNum]}`);
+      //console.log(`l = ${k}、tmp = ${myTmpCellNum}で${fieldInfo[myTmpCellNum]}`);
       countfunc();
       if (myTmpCellNum == 3) {
         goalProcess();
       }
     };
-    
+    if (tmpMoveNum == 2) {
+      moveNum[0] += 1;
+    } else if (tmpMoveNum == 3) {
+      moveNum[1] += 1;
+    };
+    tmpMoveNum = 0;
   } else if (tmpgyo != gyo && tmpretu != retu) {
     //斜めのマスをクリックしたとき
     userConsole.textContent = "斜めには動けないよぉ～😢";
@@ -290,8 +366,83 @@ function countfunc() {
   console.log(`${stepCount}歩で宝${bonusNum}個です`);
 }
 
+const resultDialog = document.getElementById("dialog");
 function goalProcess() {
+  resetImage.disabled = true;
+  allReset.disabled = true;
+  if (tmpMoveNum == 2) {
+    moveNum[0] += 1;
+  } else if (tmpMoveNum == 3) {
+    moveNum[1] += 1;
+  };
+  tmpMoveNum = 0;
   ctx.drawImage(imageg, 0, 0, fieldsLength, fieldsLength);
   fields.removeEventListener("click", canvasClick);
-  userConsole.textContent = `RESULT : ${stepCount}歩、宝${bonusNum}個`;
+  fields.addEventListener('click', showDialog);
+  date2 = new Date();
+  let date3 = date2.getTime() - date1.getTime();
+  let sec = date3 / 1000 % 60;
+  clearInterval(timerId);
+  const score = Math.floor(((2500 / sec) + ((1 + bonusNum * 400) + (1 + moveNum[0] * 400 + moveNum[1] * 600)) / (stepCount * 100)) * (1 - (2 * Math.atan(zuruResetCount)) / Math.PI));
+  let diff = score - JSON.parse(storage.getItem("best_score"));
+  if (JSON.parse(storage.getItem("best_score")) < score) {
+    storage.best_score = JSON.stringify(score);
+    bestjudge = true;
+  };
+  setTimeout(() => {
+    ctx.drawImage(imager, 0, 0, fieldsLength, fieldsLength);
+    ctx.font = "40px serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = '#474747';
+    ctx.fillText('SCORE...', cellSize * 2, cellSize * 1.5);
+    ctx.font = "25px serif";
+    ctx.fillText('タップして結果の詳細を表示', cellSize * 2, cellSize * 3.5);
+    ctx.font = "90px serif";
+    ctx.fillText(score, cellSize * 2, cellSize * 2.3);
+    if (bestjudge == true) {
+      ctx.drawImage(imageb, cellSize * 3, cellSize, cellSize, cellSize);
+    }
+    resetImage.disabled = false;
+    allReset.disabled = false;
+  }, 1500);
+  //ダイアログを設定
+  resultDialog.innerHTML = `<form method="dialog">
+      <p class="diatitle">結果詳細</p>
+      <p class="diap">通ったマス：　　　　　${stepCount}マス</p>
+      <p class="diap">拾った宝：　　　　　　${bonusNum}個</p>
+      <p class="diap">経過時間：　　　　　　${sec}秒</p>
+      <p class="diap">２マスジャンプ：　　　${moveNum[0]}回</p>
+      <p class="diap">３マスジャンプ：　　　${moveNum[1]}回</p>
+      <p class="diap">このマップのトライ回数：${zuruResetCount + 1}回目</p>
+      <p class="diap">自己ベストとの差：　　${diff}</p>
+      <p class="diascore">${score}点</p>
+      <p class="closeppp"><button class="closepop">とじる</button></p>
+    </form>`;
+  
+  //userConsole.textContent = `RESULT : ${stepCount}歩、宝${bonusNum}個、${sec}秒、2マス移動${moveNum[0]}回、3マス移動${moveNum[1]}、${zuruResetCount}回リセット、${score}点`;
+  const tips = ["理論上点数は無限に増やせます。方法は🤫", 
+    "盤面を固定してリスタートを繰り返すと点数が大幅に圧縮されます", 
+    "宝１個と２マスジャンプ１回は点数的に等価です", 
+    "３マスジャンプは２マスジャンプの1.5倍の価値があります", 
+    "ゲームは何度でもやり直せます。", 
+    "５秒以内にゴールするのが重要です", 
+    "宝の上を反復横跳びしても点数は上がりません", 
+    "少ない歩数で全ての宝を攫っていくのがプロ。", 
+    "プログラミングたっのしぃ～", 
+    "たぶんまだバグある", 
+    "盤面の情報は[2, -1, 1, 0, ‥‥, -2, 0, 0, 0, 2]みたいな長さ16のリストです", 
+    "たまにゴールできない盤面になることがあります", 
+    "一瞬の迷いが命取り"];
+  if (diff > 0) {
+    userConsole.textContent = `自己ベストを＋${diff}点更新！`;
+  } else if (-200 < diff && diff <= 0) {
+    userConsole.textContent = `自己ベスト更新まであと${-diff}点、、、！`;
+  } else {
+    userConsole.textContent = tips[getRandom(0, (tips.length - 1))];
+  }
 };
+
+function showDialog() {
+  resultDialog.showModal();
+}
