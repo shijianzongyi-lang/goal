@@ -117,7 +117,7 @@ function makeFieldImages() {//盤面上の全ての画像をリセット
 };
 
 
-const maxTime = 20;
+const maxTime = 50;
 let count = 0;
 let timerId;
 let date1, date2;
@@ -129,7 +129,7 @@ function refleshTime() {
     fields.removeEventListener('click', canvasClick);
     ctx.drawImage(images, 0, 0, fieldsLength, fieldsLength);
     const textWidth = ctx.measureText('TIME UP!!').width;
-    ctx.font = "40px serif";
+    ctx.font = "40px Potta One";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = '#474747';
@@ -168,7 +168,7 @@ let tmpCellNum = initialCell;
 images.addEventListener('load', () => {
   ctx.drawImage(images, 0, 0, fieldsLength, fieldsLength);
   const textWidth = ctx.measureText('タップして開始').width;
-  ctx.font = "40px serif";
+  ctx.font = "40px Potta One";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillStyle = '#474747';
@@ -391,14 +391,14 @@ function goalProcess() {
   };
   setTimeout(() => {
     ctx.drawImage(imager, 0, 0, fieldsLength, fieldsLength);
-    ctx.font = "40px serif";
+    ctx.font = "40px Potta One";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = '#474747';
     ctx.fillText('SCORE...', cellSize * 2, cellSize * 1.5);
-    ctx.font = "25px serif";
+    ctx.font = "25px Potta One";
     ctx.fillText('タップして結果の詳細を表示', cellSize * 2, cellSize * 3.5);
-    ctx.font = "90px serif";
+    ctx.font = "90px Potta One";
     ctx.fillText(score, cellSize * 2, cellSize * 2.3);
     if (bestjudge == true) {
       ctx.drawImage(imageb, cellSize * 3, cellSize, cellSize, cellSize);
@@ -417,7 +417,7 @@ function goalProcess() {
       <p class="diap">このマップのトライ回数：${zuruResetCount + 1}回目</p>
       <p class="diap">自己ベストとの差：　　${diff}</p>
       <p class="diascore">${score}点</p>
-      <p class="closeppp"><button class="closepop">とじる</button></p>
+      <p class="closeppp"><button class="closepop potta-one-regular">とじる</button></p>
     </form>`;
   
   //userConsole.textContent = `RESULT : ${stepCount}歩、宝${bonusNum}個、${sec}秒、2マス移動${moveNum[0]}回、3マス移動${moveNum[1]}、${zuruResetCount}回リセット、${score}点`;
@@ -431,9 +431,10 @@ function goalProcess() {
     "少ない歩数で全ての宝を攫っていくのがプロ。", 
     "プログラミングたっのしぃ～", 
     "たぶんまだバグある", 
-    "盤面の情報は[2, -1, 1, 0, ‥‥, -2, 0, 0, 0, 2]みたいな長さ16のリストです", 
+    `盤面の情報は長さ16のリストです。今回は[${fieldInfo}]でした`, 
     "たまにゴールできない盤面になることがあります", 
-    "一瞬の迷いが命取り"];
+    "一瞬の迷いが命取り", 
+    "落とし穴の先はThe Backrooms"];
   if (diff > 0) {
     userConsole.textContent = `自己ベストを＋${diff}点更新！`;
   } else if (-200 < diff && diff <= 0) {
