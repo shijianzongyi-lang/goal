@@ -1,4 +1,11 @@
 @charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Kiwi+Maru&family=Kosugi+Maru&family=Mochiy+Pop+One&family=Potta+One&family=Yusei+Magic&display=swap');
+
+.potta-one-regular {
+  font-family: "Potta One", system-ui;
+  font-weight: 200;
+  font-style: normal;
+}
 
 header {
   width: 100%;
@@ -117,10 +124,13 @@ body.active {
 
 
 body {
-  font-family: "Kiwi Maru", serif;
-  font-weight: 400;
-  font-style: normal;
   margin: 0;
+}
+.resetbtn {
+  border-radius: 20px;
+  border: none;
+  background-color: #10d0de;
+  height: 30px;
 }
 .center {
   text-align: center;
@@ -171,4 +181,24 @@ dialog::backdrop {
   text-align: center;
   font-size: 30px;
   font-weight: bold;
+}
+
+
+
+.imgs {
+  display:table;
+  margin: 10px 10px;
+}
+[id^="cellexp"] {
+  margin-right: 10px;
+}
+.detail {
+  display:table-cell;
+  vertical-align:middle;
+}
+.ps {
+  margin: 0 10px;
+}
+.explains {
+  margin-bottom: 40px;
 }
