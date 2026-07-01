@@ -25,6 +25,16 @@ fields.setAttribute('height', fieldsLength);
 const cellSize = fieldsLength / 4;
 const ctx = fields.getContext('2d');//ctxでcanvasに描写
 
+//スクロール、拡大固定
+console.log('リサイズ完了後の処理');
+const body1 = document.getElementById("body1");
+const outerHeight = window.innerHeight;
+const bodyHeight = document.querySelector('body').clientHeight;
+if ((outerHeight - bodyHeight) >= 0) {
+  body1.classList.add("body1");
+}
+
+
 const userConsole = document.getElementById("alert");
 //ルール
 let stepCount = 0;//通ったマスの数
@@ -396,7 +406,7 @@ function goalProcess() {
     ctx.textBaseline = "middle";
     ctx.fillStyle = '#474747';
     ctx.fillText('SCORE...', cellSize * 2, cellSize * 1.5);
-    ctx.font = "25px Potta One";
+    ctx.font = "20px Potta One";
     ctx.fillText('タップして結果の詳細を表示', cellSize * 2, cellSize * 3.5);
     ctx.font = "90px Potta One";
     ctx.fillText(score, cellSize * 2, cellSize * 2.3);
@@ -447,3 +457,5 @@ function goalProcess() {
 function showDialog() {
   resultDialog.showModal();
 }
+
+//リセマラの回数制限
