@@ -126,6 +126,9 @@ body.active {
 body {
   margin: 0;
 }
+.body1 {
+  touch-action: none;
+}
 .resetbtn {
   border-radius: 20px;
   border: none;
