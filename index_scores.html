@@ -22,7 +22,7 @@
           <div class="logo">
             <a class="logo_item" href="index.html">
               <img src="coin.png" class="headStar">
-              <text class="headText">たんたんけん</text>
+              <text class="headText">たんけんたん</text>
             </a>
           </div>
           <a class="header_line">
@@ -35,8 +35,27 @@
     </div>
 </header>
 <body class="potta-one-regular">
-  <h3 class="center">要素紹介</h3>
-  <button onclick="addScore()">追加</button>
+  <h3 class="center h3cs">順位表</h3>
+
+  <table id="jumi">
+    <thead>
+      <tr class="thead">
+        <th>順位</th>
+        <th>名前</th>
+        <th>点数</th>
+      </tr>
+    </thead>
+    <tbody id="jumib"><img src="loading.png" id="treasure"></tbody>
+  </table>
+
+  <dialog id="editname">
+    <form method="dialog">
+      <p class="center editTitle">名前を変更</p>
+      <div class="center"><input id="nameInput" type="text" class="txt"></div>
+      <div class="center"><button id="changeName" class="potta-one-regular">これで決定</button></div>
+      <p class="closeppp foredit"><button class="closepop potta-one-regular">とじる</button></p>
+    </form>
+  </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script3.js"></script>
