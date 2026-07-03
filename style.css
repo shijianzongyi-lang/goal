@@ -202,3 +202,73 @@ dialog::backdrop {
 .explains {
   margin-bottom: 40px;
 }
+
+
+
+.h3cs {
+  font-size: 30px;
+  font-weight: 100;
+  margin: 5px 0;
+}
+#jumi {
+  table-layout: fixed;
+  width: 90%;
+  margin: 10px auto;
+  border-collapse: collapse;
+  font-size: 20px;
+}
+th, td {
+  padding: 0.4em 0;
+  text-align: center;
+}
+tr :nth-child(1) {
+  width: 20%;
+}
+tr :nth-child(3) {
+  width: 20%;
+}
+tbody tr:nth-child(odd) {
+  background-color: #ffeeca;
+}
+.thead {
+  border-bottom: 3px solid #999999;
+}
+.mynametd {
+  color: red;
+  text-decoration: underline red 3px;
+}
+.hide {
+  display: none;
+}
+
+#editname {
+  background-color: #ffcd61;
+}
+.editTitle {
+  font-size: 30px;
+}
+.txt{
+  display: inline-block;
+  width: 90%;
+  height: 40px;
+  padding: 0.3em;
+  border: 3px solid #414141;
+  box-sizing: border-box;
+  background: #fff3d8;
+  margin: 1px auto;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.foredit {
+  margin-bottom: 20px;
+}
+#changeName {
+  width: 110px;
+  height: 40px;
+  font-size: 18px;
+  border: 0px solid #999;
+  border-radius: 5px;
+  color: #ffffff;
+  background:rgb(74, 170, 239);
+  margin: 20px 0;
+}
