@@ -25,8 +25,7 @@ fields.setAttribute('height', fieldsLength);
 const cellSize = fieldsLength / 4;
 const ctx = fields.getContext('2d');//ctxでcanvasに描写
 
-//スクロール、拡大固定
-console.log('リサイズ完了後の処理');
+//スクロール固定
 const body1 = document.getElementById("body1");
 const outerHeight = window.innerHeight;
 const bodyHeight = document.querySelector('body').clientHeight;
@@ -419,13 +418,13 @@ function goalProcess() {
   //ダイアログを設定
   resultDialog.innerHTML = `<form method="dialog">
       <p class="diatitle">結果詳細</p>
-      <p class="diap">通ったマス：　　　　　${stepCount}マス</p>
-      <p class="diap">拾った宝：　　　　　　${bonusNum}個</p>
-      <p class="diap">経過時間：　　　　　　${sec}秒</p>
-      <p class="diap">２マスジャンプ：　　　${moveNum[0]}回</p>
-      <p class="diap">３マスジャンプ：　　　${moveNum[1]}回</p>
+      <p class="diap">通ったマス：　　　${stepCount}マス</p>
+      <p class="diap">拾った宝：　　　　${bonusNum}個</p>
+      <p class="diap">経過時間：　　　　${sec}秒</p>
+      <p class="diap">２マスジャンプ：　${moveNum[0]}回</p>
+      <p class="diap">３マスジャンプ：　${moveNum[1]}回</p>
       <p class="diap">このマップのトライ回数：${zuruResetCount + 1}回目</p>
-      <p class="diap">自己ベストとの差：　　${diff}</p>
+      <p class="diap">自己ベストとの差：　${diff}</p>
       <p class="diascore">${score}点</p>
       <p class="closeppp"><button class="closepop potta-one-regular">とじる</button></p>
     </form>`;
@@ -444,7 +443,9 @@ function goalProcess() {
     `盤面の情報は長さ16のリストです。今回は[${fieldInfo}]でした`, 
     "たまにゴールできない盤面になることがあります", 
     "一瞬の迷いが命取り", 
-    "落とし穴の先はThe Backrooms"];
+    "落とし穴の先はThe Backrooms", 
+    "最近地震が多くて嫌な感じですね", 
+    "割と速さが必要かも？"];
   if (diff > 0) {
     userConsole.textContent = `自己ベストを＋${diff}点更新！`;
   } else if (-200 < diff && diff <= 0) {
