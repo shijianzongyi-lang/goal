@@ -119,7 +119,9 @@ async function refleshScore() {
 //名前を更新する
 async function refleshName(udname) {
   if (udname == "") {
-    console.log("入力してへんやん");
+    alert("入力してよ～");
+  } else if (udname.length > 10) {
+    alert("10文字以内にしてー！");
   } else {
     const { data, error } = await client
       .from('scores')
@@ -139,4 +141,9 @@ changename.addEventListener('click', () => {
   const updated = document.getElementById("nameInput");
   console.log(updated.value);
   rfName(updated.value);
+})
+
+document.getElementById("idReset").addEventListener("click", () => {
+  console.log("押した");
+  storage.setItem("my_score_id", JSON.stringify(""));
 })
