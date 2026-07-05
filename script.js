@@ -5,6 +5,9 @@ const storage = localStorage;
 if (storage.getItem("best_score") == null) {
   storage.setItem("best_score", JSON.stringify(""));
 };
+if (storage.getItem("walker") == null) {
+  storage.setItem("walker", JSON.stringify("human.png"));
+}
 
 const menu = document.querySelector('.header_line');
 menu.addEventListener("click", menuchange);
@@ -90,7 +93,7 @@ imagei.src = 'input.png';
 const imageo = new Image();
 imageo.src = 'output.png';
 const imagem = new Image();
-imagem.src = 'human.png';
+imagem.src = JSON.parse(storage.getItem("walker"));
 const imagef = new Image();
 imagef.src = 'fall.png';
 const imageg = new Image();
@@ -242,11 +245,19 @@ function pertsReset() {
   timerId = setInterval(refleshTime, 1000);
   bestjudge = false;
 }
+let risemara1;
+let risemara2;
 //盤面以外をリセットする！！！！！！！
 resetImage.disabled = true;
 resetImage.addEventListener('click', () => {
   pertsReset();
   zuruResetCount += 1;
+  resetImage.disabled = true;
+  allReset.disabled = true;
+  risemara1 = setInterval(() => {
+    resetImage.disabled = false;
+    allReset.disabled = false;
+  }, 3000);
 });
 //盤面全てをリセットする！！！！！！！！！
 allReset.disabled = true;
@@ -255,6 +266,12 @@ allReset.addEventListener('click', () => {
   makeFieldInfo();
   pertsReset();
   zuruResetCount = 0;
+  resetImage.disabled = true;
+  allReset.disabled = true;
+  risemara2 = setInterval(() => {
+    resetImage.disabled = false;
+    allReset.disabled = false;
+  }, 3000);
 })
 
 
@@ -291,7 +308,7 @@ function judge(value) {
       if (tmp == -2) {
         ctx.drawImage(imagef, 0, 0, fieldsLength, fieldsLength);
         clearInterval(timerId);
-        userConsole.textContent = "穴に落ちた💦再読み込みでリスタートしよう！";
+        userConsole.textContent = "穴に落ちた💦ボタンを押してリスタートしよう！";
         fields.removeEventListener("click", canvasClick);
         break;
       };
@@ -330,7 +347,7 @@ function judge(value) {
       if (tmp == -2) {
         ctx.drawImage(imagef, 0, 0, fieldsLength, fieldsLength);
         clearInterval(timerId);
-        userConsole.textContent = "穴に落ちた💦再読み込みでリスタートしよう！";
+        userConsole.textContent = "穴に落ちた💦ボタンを押してリスタートしよう！";
         fields.removeEventListener("click", canvasClick);
         break;
       };
@@ -379,6 +396,8 @@ const resultDialog = document.getElementById("dialog");
 function goalProcess() {
   resetImage.disabled = true;
   allReset.disabled = true;
+  clearInterval(risemara1);
+  clearInterval(risemara2);
   if (tmpMoveNum == 2) {
     moveNum[0] += 1;
   } else if (tmpMoveNum == 3) {
