@@ -243,6 +243,7 @@ tbody tr:nth-child(odd) {
 
 #editname {
   background-color: #ffcd61;
+  height: 60%;
 }
 .editTitle {
   font-size: 30px;
@@ -271,4 +272,22 @@ tbody tr:nth-child(odd) {
   color: #ffffff;
   background:rgb(74, 170, 239);
   margin: 20px 0;
+}
+
+
+
+
+#changeanimal {
+  width: 100%;
+  /*margin: 10px auto;*/
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+#btnLeft, #btnRight {
+  font-size: 30px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
