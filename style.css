@@ -127,10 +127,11 @@ body {
   overflow: hidden;
 }
 .resetbtn {
-  border-radius: 20px;
+  border-radius: 10px;
   border: none;
-  background-color: #10d0de;
+  background-color: #5cc4cb;
   height: 40px;
+  margin: 0 10px;
 }
 .center {
   text-align: center;
