@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>探検</title>
+  <link rel="icon" href="a.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <style>
+    
+  </style>
+</head>
+<nav class="open_menu">
+  <div class="menu1"><a class="menu11" href="index_explain.html">ー 操作方法 ー</a></div>
+  <div class="menu2"><a class="menu11" href="index_scores.html">ー みんなのスコア ー</a></div>
+  <div class="menu2"><a class="menu11" href="index_walker.html">ー キャラを変える ー</a></div>
+</nav>
+<header>
+  <div class="header_background">
+      <div class="header_container">
+        <div class="header_navbar">
+          <div class="logo">
+            <a class="logo_item" href="index.html">
+              <img src="coin.png" class="headStar">
+              <text class="headText">たんけんたん</text>
+            </a>
+          </div>
+          <a class="header_line">
+            <span class="line-item line-item--top"></span>
+            <span class="line-item line-item--middle"></span>
+            <span class="line-item line-item--bottom"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+</header>
+<body class="potta-one-regular">
+  <h3 class="center">管理画面</h3>
+  <button id="idReset">リセット</button>
+
+
+  <script>
+    const storage = localStorage;
+    document.getElementById("idReset").addEventListener("click", () => {
+      storage.setItem("my_score_id", JSON.stringify(""));
+    })
+  </script>
+</body>
+</html>
