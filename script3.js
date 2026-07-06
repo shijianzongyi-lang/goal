@@ -142,8 +142,3 @@ changename.addEventListener('click', () => {
   console.log(updated.value);
   rfName(updated.value);
 })
-
-document.getElementById("idReset").addEventListener("click", () => {
-  console.log("押した");
-  storage.setItem("my_score_id", JSON.stringify(""));
-})
