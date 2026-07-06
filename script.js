@@ -464,7 +464,8 @@ function goalProcess() {
     "一瞬の迷いが命取り", 
     "落とし穴の先はThe Backrooms", 
     "最近地震が多くて嫌な感じですね", 
-    "割と速さが必要かも？"];
+    "割と速さが必要かも？", 
+    "機械学習を勉強したい"];
   if (diff > 0) {
     userConsole.textContent = `自己ベストを＋${diff}点更新！`;
   } else if (-200 < diff && diff <= 0) {
