@@ -17,6 +17,7 @@ function menuchange() {
 
 const htmlWidth = document.querySelector('html');
 const photoSize = htmlWidth.clientWidth * 0.8;
+const walkerName = document.getElementById("walkerName");
 const changeField = document.getElementById("changeanimal");
 const showpc = document.getElementById("showpc");
 const btnWidth = htmlWidth.clientWidth * 0.2;
@@ -34,13 +35,15 @@ centerDiv.style.width = `${btnHeight}px`;
 showpc.height = btnHeight;
 showpc.width = btnHeight;
 
-const walkerList = ["human.png", "animal1.png", "animal2.png", "animal3.png", "animal4.png", "animal5.png", "animal6.png"];
+const names = ["非常口", "カオアリ", "パックマン", "U-tan", "くぅ", "ぽぅぽ", "ワンカス", "ヤンヤン", "中身", "豊城"];
+const walkerList = ["human.png", "animal1.png", "animal2.png", "animal3.png", "animal4.png", "animal5.png", "animal6.png", "animal7.png", "animal8.png", "animal9.png"];
 let tmpIndex;
 for (let i = 0; i < walkerList.length; i++) {
   if(walkerList[i] == JSON.parse(storage.getItem("walker"))) {
     tmpIndex = i;
   }
 }
+walkerName.textContent = names[tmpIndex];
 showpc.src = walkerList[tmpIndex];
 
 btnRight.addEventListener("click", () => {
@@ -49,6 +52,7 @@ btnRight.addEventListener("click", () => {
   } else {
     tmpIndex++;
   }
+  walkerName.textContent = names[tmpIndex];
   showpc.src = walkerList[tmpIndex];
   storage.setItem("walker", JSON.stringify(walkerList[tmpIndex]));
 })
@@ -58,6 +62,7 @@ btnLeft.addEventListener("click", () => {
   } else {
     tmpIndex--;
   }
+  walkerName.textContent = names[tmpIndex];
   showpc.src = walkerList[tmpIndex];
   storage.setItem("walker", JSON.stringify(walkerList[tmpIndex]));
 })
