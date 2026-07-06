@@ -139,7 +139,7 @@ body {
 }
 canvas {
   border: 1px solid black;
-  
+  margin-left: 5px;
 }
 #explain {
   display: none;
@@ -278,7 +278,9 @@ tbody tr:nth-child(odd) {
 
 
 
-
+#walkerName {
+  font-size: 30px;
+}
 #changeanimal {
   width: 100%;
   /*margin: 10px auto;*/
