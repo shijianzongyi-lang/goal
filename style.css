@@ -126,12 +126,30 @@ body {
 .body1 {
   overflow: hidden;
 }
+#slider {
+  display: flex;
+  justify-content: space-between;
+}
+#changeDim {
+  display: flex;
+}
+#dimention {
+  margin: 0 5px;
+}
+.dimbtn {
+  border-radius: 10px;
+  border: none;
+  background-color: #00ffd54c;
+  height: 23px;
+  /*margin: 0 10px;*/
+  color: #000000;
+}
 .resetbtn {
   border-radius: 10px;
   border: none;
   background-color: #5cc4cb;
   height: 40px;
-  margin: 0 10px;
+  /*margin: 0 10px;*/
   color: #000000;
 }
 .center {
