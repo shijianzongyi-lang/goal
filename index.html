@@ -38,13 +38,21 @@
   <!--<h3 class="center">キャンバス</h3>-->
   <p id="explain" class="center">あかさたな</p>
   <p id="alert" class="center"></p>
-  <div id="goal">↑GOAL↑</div>
+  <div id="slider">
+    <div id="changeDim">
+        <button id="decDim" class="dimbtn potta-one-regular">ー</button>
+        <div id="dimention">4</div>
+        <button id="incDim" class="dimbtn potta-one-regular">＋</button>
+    </div>
+    <div id="goal">↑GOAL↑</div>
+  </div>
   <canvas id="field" height="361" width="360"></canvas>
   <div>↑START↑</div>
 
   <div id="buttons" class="center">
     <button id="reset" class="resetbtn potta-one-regular">盤面固定でリスタート</button>
     <button id="allReset" class="resetbtn potta-one-regular">全リセット</button>
+    <button onclick="main()" id="calc" class="resetbtn potta-one-regular hide">AIにやらす</button>
   </div>
 
   <dialog id="dialog">
@@ -52,6 +60,7 @@
     </form>
   </dialog>
 
+  <script src="mod.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
